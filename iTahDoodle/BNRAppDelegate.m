@@ -16,6 +16,28 @@ NSString * docPath()
 
 @implementation BNRAppDelegate
 
+#pragma mark - Add Task method
+
+- (void)addTask:(id)sender
+{
+    NSString *item = [taskField text];
+    
+    if ([item isEqualToString:@""])
+    {
+        return;
+    }
+    else
+    {
+        [tasks addObject:item];
+        //refresh table so item shows up
+        [taskTable reloadData];
+        //clear out the text field
+        [taskField setText:@""];
+        //dismiss the keyboard
+        [taskField resignFirstResponder];
+    }
+}
+
 #pragma mark - Application delegate callbacks
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -97,6 +119,7 @@ NSString * docPath()
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [tasks writeToFile:docPath() atomically:YES];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -112,6 +135,7 @@ NSString * docPath()
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [tasks writeToFile:docPath() atomically:YES];
 }
 
 #pragma mark - Table View management
