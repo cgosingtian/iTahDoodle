@@ -8,14 +8,32 @@
 
 #import "BNRAppDelegate.h"
 
+NSString * docPath()
+{
+    NSArray * pathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return [[pathList objectAtIndex:0] stringByAppendingPathComponent:@"data.td"];
+}
+
 @implementation BNRAppDelegate
+
+#pragma mark - Application delegate callbacks
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    // Override point for customization after application launch.
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    [self.window makeKeyAndVisible];
+    //Attempt to load a file
+    NSArray * plist = [NSArray arrayWithContentsOfFile:docPath()];
+    if (plist)
+    {
+        tasks = [plist mutableCopy];
+    }
+    else
+    {
+        tasks = [[NSMutableArray alloc] init];
+    }
     return YES;
 }
 
