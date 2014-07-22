@@ -10,7 +10,7 @@
 
 NSString *docPath(void); //C helper function
 
-@interface BNRAppDelegate : UIResponder <UIApplicationDelegate>
+@interface BNRAppDelegate : UIResponder <UIApplicationDelegate, UITableViewDataSource>
 {
     UITableView * taskTable;
     UITextField * taskField;
